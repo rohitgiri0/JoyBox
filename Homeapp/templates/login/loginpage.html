@@ -1,0 +1,61 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static "css/login.css" %}" />
+    <title>login</title>
+  </head>
+  <body>
+    <div class="main-login-form">
+      <div class="login-form-label">
+        <h2>Login</h2>
+      </div>
+       {% if messages %}
+      {% for message in messages %}
+        <h2 style="color: #e8e4e4ff;">{{message}}</h2>
+      {% endfor %}
+    {% endif %}
+      <form method='POST' action='' class="login-form">
+        {% csrf_token %}
+        <input
+          maxlength="30"
+          minlength="5"
+          required="true"
+          class="username-input"
+          type="text"
+          placeholder="username"
+          required name='username'
+        />
+        <input
+          maxlength="30"
+          minlength="5"
+          required="true"
+          class="password-input"
+          type="password"
+          placeholder="password"
+          required name='password'
+        />
+        <button class="login-button" type='Submit'>Login</button>
+      
+      <div class="divider">
+        <div class="line"></div>
+        <div class="or">Or</div>
+        <div class="line"></div>
+      </div>
+      <button onclick="window.location.href='{% provider_login_url 'google' %}'" type="button" class="google-login-button">
+  <div class="google-login-logo">
+    <img src="{% static 'images/google.svg' %}" alt="">
+  </div>
+  <div class="google-login-text">Login using Google</div>
+</button>
+      </form>
+      <div class="register-text">
+        <p>dont have an accout <a href="{% url 'register' %}">register now</a></p>
+      </div>
+    </div>
+  </body>
+</html>
