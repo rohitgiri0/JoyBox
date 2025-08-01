@@ -8,6 +8,8 @@ from django.core.mail import EmailMessage
 from django.utils import timezone
 from django.urls import reverse
 from .models import *
+from .forms import ConsoleListingForm
+
 # Create your views here.
 
 def home(request):
@@ -46,4 +48,17 @@ def register(request):
 def logout_view(request):
     logout(request)
     return redirect ('home')
+
+@login_required
+def create_listing(request):
+    if request.method=='POST':
+        form=ConsoleListingForm(request.POST,request.FILES)
+        if form.is_valid():
+            listing=form.save(commit=False)
+            listing.user=request.user
+            listing.save()
+            return redirect('home')
+    else:
+        form=ConsoleListingForm()
+    return render(request,'listing/create_listing.html',{'form':form})
     

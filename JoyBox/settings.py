@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'widget_tweaks',
     
 ]
 AUTHENTICATION_BACKENDS = (
@@ -136,6 +137,9 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL='/'
 SOCIALACCOUNT_LOGIN_ON_GET=True
+
+LOGIN_URL = '/login'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
