@@ -10,14 +10,14 @@
 </head>
 <body class="page-body">
     <div class="listing-container">
-        <h2 class="header">List Your Console</h2>
+        <h2 class="header">Pitch Your Playbox</h2>
 
         <form method="POST" enctype="multipart/form-data" class="form-space">
             {% csrf_token %}
             
             <!-- Title -->
             <div>
-                <label for="id_title" class="label">Console Title</label>
+                <label for="id_title" class="label">Console Name</label>
                 {{ form.console_name|add_class:"input-field"|attr:"placeholder=PS5,Xbox" }}
             </div>
 

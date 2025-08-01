@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Browse Consoles | JoyBox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://kit.fontawesome.com/a2e0e6fae4.js" crossorigin="anonymous"></script>
+
+  
+  <link rel="stylesheet" href="{% static 'css/browse.css' %}">
+</head>
+<nav class="navbar">
+      <div class="navbar__container">
+        <img src="{% static "images/JoyBox.png" %}" alt="JoyBox">
+        {% comment %} <a href="#home" id="navbar__logo">JoyBox</a> {% endcomment %}
+        <div class="navbar__toggle" id="mobile-menu">
+          <span class="bar"></span> <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+          <li class="navbar__item">
+            <a href="{%url 'home' %}" class="navbar__links" id="home-page">Home</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#about" class="navbar__links" id="about-page">About</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#services" class="navbar__links" id="services-page"
+              >Services</a
+            >
+          </li>
+          {% if user.is_authenticated %}
+          <li class="navbar__item">
+            <a href="#" class="navbar__links">{{ user.username }}</a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{% url 'logout' %}" class="button">Logout</a>
+          </li>
+        {% else %}
+          <li class="navbar__btn">
+            <a href="{% url 'loginpage' %}" class="button" id="signup">Sign In</a>
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+    </nav>
+<body class="console-browse">
+
+  <div class="container">
+    <h1>Loot Consoles</h1>
+    <p class="subtitle">Find your next gaming setup from trusted sellers</p>
+
+    <!-- Search and Filters -->
+    <form method="get" class="filters">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search consoles, brands, or models..."
+        value="{{ request.GET.q }}"
+      />
+        
+      <select name="game">
+        <option value="">All Games</option>
+        <option value="GTA" {% if request.GET.game == "GTA" %}selected{% endif %}>GTA</option>
+        <option value="RDR" {% if request.GET.game == "RDR" %}selected{% endif %}>RDR</option>
+        <option value="Fortnite" {% if request.GET.game == "Fortnite" %}selected{% endif %}>Fortnite</option>
+        <option value="Valorant" {% if request.GET.game == "Valorant" %}selected{% endif %}>Valorant</option>
+      </select>
+      <button type="submit" class="filter-icon">search<i class="fas fa-filter"></i></button>
+    </form>
+
+    <p class="result-count">Showing {{ consoles|length }} consoles available</p>
+
+    <!-- Console Cards -->
+    <div class="card-grid">
+      {% for console in consoles %}
+      <div class="console-card">
+        <img src="{{ console.photo1.url }}" alt="{{ console.name }}">
+        
+        {% if console.available == True %}
+        <div class="status available">Available</div>
+
+        {% else %}
+        <div class="status rented">Rented</div>
+        {% endif %}
+
+        <h2>{{ console.name }}</h2>
+        <p class="location">
+          <i class="fas fa-map-marker-alt"></i>  &bull; {{ console.location }} &bull;
+        </p>
+        <p class="price">₹{{ console.price }}</p>
+        <a href="#" class="btn">View Details</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.getElementById("mobile-menu");
+    const menuLinks = document.querySelector(".navbar__menu");
+
+    menu.addEventListener("click", function () {
+      menu.classList.toggle("is-active");
+      menuLinks.classList.toggle("active");
+    });
+  });
+</script>
+</body>
+</html>

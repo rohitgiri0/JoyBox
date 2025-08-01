@@ -44,9 +44,9 @@ margin: 0 auto 32px;
 text-align: center;
   margin-bottom: 32px;
   letter-spacing: 1px;
-  background: linear-gradient(40deg, #ff0055, #ff4141, #ff0026);
+  background: linear-gradient(40deg, #ff0055, #c37777, #ff0026);
   background-size: 200%;
-  background-position: left;
+  background-position: right;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -54,7 +54,7 @@ text-align: center;
 }
 
 .header:hover {
-  background-position: right;
+  background-position: left;
 }
 
 /* Labels */
@@ -121,7 +121,7 @@ text-align: center;
 
 .submit-button {
   display: inline-block;
-  background: linear-gradient(135deg, #d11642, #f6803b);
+  background: linear-gradient(135deg, #d11661, #ff650c);
   color: white;
   padding: 12px 24px;
   font-weight: 600;

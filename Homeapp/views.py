@@ -57,8 +57,22 @@ def create_listing(request):
             listing=form.save(commit=False)
             listing.user=request.user
             listing.save()
-            return redirect('home')
+            return redirect('browse_consoles')
     else:
         form=ConsoleListingForm()
     return render(request,'listing/create_listing.html',{'form':form})
     
+
+def browse_consoles(request):
+    consoles = ConsoleListing.objects.all()
+
+    # Search by name
+    query = request.GET.get('q')
+    if query:
+        consoles = consoles.filter(console_name__icontains=query)
+
+    # Filter by games
+    game = request.GET.get('game')
+    if game:
+        consoles = consoles.filter(description__icontains=game)
+    return render(request, 'browse/browse_console.html', {'consoles': consoles})
