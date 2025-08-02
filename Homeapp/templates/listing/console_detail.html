@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+  <style>
+
+    body {
+      background-color: #11111c;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .console-detail-container {
+      max-width: 850px;
+      margin: 4rem auto;
+      background: linear-gradient(145deg, #1a1a2e, #222238);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(193, 170, 255, 0.12);
+      color: #ffffff;
+      line-height: 1.8;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .console-detail-container h1 {
+      font-size: 2.8rem;
+      color: #c1aaff;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(193, 170, 255, 0.4);
+    }
+
+    .console-detail-container h2 {
+      margin-top: 2.5rem;
+      color: #ff7b00;
+      font-size: 2rem;
+      text-shadow: 0 0 6px rgba(255, 123, 0, 0.4);
+    }
+
+    .console-detail-container p {
+      margin: 0.6rem 0;
+      font-size: 1.05rem;
+    }
+
+    .console-detail-container p strong {
+      color: #aabaff;
+    }
+
+    .detail-image {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .chat-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(to right, #ff7b00, #ffa94d);
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 0 12px rgba(255, 123, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .chat-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 123, 0, 0.6);
+    }
+
+
+  @media (max-width: 600px) {
+    .console-detail-container {
+      margin: 2rem 1rem;
+      padding: 1.5rem;
+    }
+
+    .console-detail-container h1 {
+      font-size: 2rem;
+    }
+
+    .console-detail-container h2 {
+      font-size: 1.5rem;
+    }
+
+    .console-detail-container p {
+      font-size: 0.95rem;
+    }
+
+    .chat-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    .detail-image {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  </style>
+{% endblock %}
+{% block title %}{{ listing.console_name }} | Details{% endblock %}
+
+{% block content %}
+<div class="console-detail-container">
+  <h1>{{ listing.console_name }}</h1>
+  <img src="{{ listing.photo1.url }}" alt="{{ listing.console_name }}" class="detail-image">
+  <img src="{{ listing.photo2.url }}" alt="{{ listing.console_name }}" class="detail-image">
+  <p><strong>Description:</strong> {{ listing.description }}</p>
+  <p><strong>Price per day:</strong> ₹{{ listing.price }}</p>
+  <p><strong>Location:</strong> {{ listing.location }}</p>
+  <p><strong>Status:</strong> {% if listing.available %}Available{% else %}Rented{% endif %}</p>
+
+  <h2>Seller Info</h2>
+  <p><strong>Name:</strong> {{ listing.user.username }}</p>
+  {% comment %} <p><strong>Email:</strong> {{ listing.user.email }}</p> {% endcomment %}
+  <a href="#" class="chat-btn">Chat with Seller</a>
+</div>
+{% endblock %}

@@ -193,21 +193,26 @@ body {
 
 .console-browse h1 {
   font-size: 3rem;
-  background: linear-gradient(to right, #fcb045, #fd1d1d, #833ab4);
-  background-clip: text;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(90deg, #ff7b00, #ffa94d, #ff7b00);
+  background-size: 300% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-align: center;
-  transition: transform 0.4s ease, text-shadow 0.4s ease;
+  animation: shimmerOrange 5s ease-in-out infinite;
   letter-spacing: 1px;
 }
 
-.console-browse h1:hover {
-  transform: scale(1.05);
-  text-shadow:
-    0 0 8px rgba(252, 176, 69, 0.4),
-    0 0 16px rgba(253, 29, 29, 0.4),
-    0 0 24px rgba(131, 58, 180, 0.5);
+@keyframes shimmerOrange {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
 }
 
 .console-browse .subtitle {

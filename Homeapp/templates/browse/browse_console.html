@@ -152,7 +152,11 @@
           <i class="fas fa-map-marker-alt"></i>  &bull; {{ console.location }} &bull;
         </p>
         <p class="price">₹{{ console.price }}</p>
-        <a href="#" class="btn">View Details</a>
+      {% if console.pk %}
+        <a href="{% url 'console_detail' console.pk %}" class="btn">View Details</a>
+      {% else %}
+        <span class="btn disabled">No Details</span>
+      {% endif %}
       </div>
       {% endfor %}
     </div>

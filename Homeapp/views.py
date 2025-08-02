@@ -102,3 +102,8 @@ def delete_listing(request, pk):
         listing.delete()
         return redirect('dashboard')
     return render(request, 'delete/delete_confirm.html', {'listing': listing})
+
+
+def console_detail(request, pk):
+    listing = get_object_or_404(ConsoleListing, pk=pk)
+    return render(request, 'listing/console_detail.html', {'listing': listing})
