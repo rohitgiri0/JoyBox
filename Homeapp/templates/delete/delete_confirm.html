@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/delete_confirm.css" %}">
+</head>
+<body>
+  <div class="delete-container">
+    <h2 class="delete-heading">Confirm Delete</h2>
+    <p class="delete-message">Are you sure you want to delete "{{ listing.console_name }}"?</p>
+    <form method="post" class="delete-form">
+      {% csrf_token %}
+      <button type="submit" class="delete-btn">Yes, Delete</button>
+      <a href="{% url 'dashboard' %}" class="cancel-btn">Cancel</a>
+    </form>
+  </div>
+</body>
+</html>

@@ -94,7 +94,9 @@
 }
 
 .navbar__links:hover {
-  color: #9518fc;
+  color: #fc7318;
+  text-shadow: 0 0 6px #fc7318;
+  transform: scale(1.05);
   transition: all 0.3s ease-in-out;
 }
 
@@ -156,6 +158,7 @@
 
   .navbar__btn {
     padding-bottom: 2rem;
+    text-align: center;
   }
 
   .button {
@@ -217,43 +220,32 @@
   color: #fff;
 }
 
+
 .hero__heading span {
-  background: #ee0979; /* fallback color */
-  background: -webkit-linear-gradient(
-    to right,
-    #ff6a00,
-    #ee0979
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #ff6a00,
-    #ee0979
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-size: 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  color: #c1aaff;
+  font-weight: bold;
+  font-size: inherit;
+  animation: textGlow 2.5s ease-in-out infinite alternate;
+  transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.3s ease;
 }
+
+.hero__heading span:hover {
+  color: #ffffff;
+  text-shadow: 0 0 6px #8f00ff, 0 0 12px #c1aaff, 0 0 20px #c1aaff;
+  transform: translateY(-6px);
+}
+
 
 .hero__description {
   font-size: 3.75rem;
-  background: #da22ff; /* fallback color */
-  background: -webkit-linear-gradient(
-    to right,
-    #9114ff,
-    #da22ff
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #8f0eff,
-    #da22ff
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-size: 100%;
+  background: linear-gradient(to right, #8f0eff, #da22ff);
+  background-size: 200%;
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: animateTextGradient 4s linear infinite, glowText 2s ease-in-out infinite alternate;
 }
 
 .highlight {
@@ -713,4 +705,31 @@
     padding: 10px;
     width: 100%;
   }
+}
+
+
+@keyframes borderGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 0 3px #c1aaff, 0 0 6px #8f00ff;
+  }
+  100% {
+    text-shadow: 0 0 6px #c1aaff, 0 0 12px #8f00ff;
+  }
+}
+
+@keyframes animateTextGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glowText {
+  0% { text-shadow: 0 0 4px #da22ff; }
+  100% { text-shadow: 0 0 10px #8f0eff; }
 }

@@ -91,9 +91,12 @@ body {
 }
 
 .navbar__links:hover {
-  color: #9518fc;
+  color: #fc7318;
+  text-shadow: 0 0 6px #fc7318;
+  transform: scale(1.05);
   transition: all 0.3s ease-in-out;
 }
+
 
 @media screen and (max-width: 960px) {
   .navbar__container {

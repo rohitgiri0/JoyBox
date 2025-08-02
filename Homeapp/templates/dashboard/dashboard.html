@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/dashboard.css" %}">
+        <style>
+      .navbar__item .username-button {
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 6px;
+        line-height: 1;
+        background-color: #11111c;
+        padding: 10px 18px;
+        border-radius: 25px;
+        font-weight: bold;
+        color: #ff7b00;
+        text-decoration: none;
+        box-shadow: 0 0 10px #ff7b00;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .username-button:hover {
+        transform: scale(1.05);
+        background-color: #0f0f2b;
+        border-color: #ff7b00;
+        box-shadow: 0 0 20px #ff7b00, 0 0 10px #ff7b00 inset;
+        color: #ffffff;
+      }
+              @media (max-width: 768px) {
+        .navbar__item .username-button {
+          display: block;
+          width: 100%;
+          max-width: 250px;
+          text-align: center;
+          margin: 10px auto;
+          padding: 10px;
+          font-size: 1rem;
+        }
+      }
+            .navbar__btn .button {
+        background: linear-gradient(to right, #ff7b00, #ff4f00);
+        padding: 8px 18px;
+        border-radius: 25px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        border: none;
+        box-shadow: 0 0 12px #ff6a00;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .navbar__btn .button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #ff4f00, 0 0 12px #ff7b00 inset;
+        color: #ffffff;
+      }
+
+        .dashboard-heading{
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #ff7b00, #ffa94d, #ff7b00);
+        background-size: 300% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 5s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0% center;
+        }
+        50% {
+          background-position: 100% center;
+        }
+        100% {
+          background-position: 0% center;
+        }
+      }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+      <div class="navbar__container">
+        <img src="{% static "images/JoyBox.png" %}" alt="JoyBox">
+        {% comment %} <a href="#home" id="navbar__logo">JoyBox</a> {% endcomment %}
+        <div class="navbar__toggle" id="mobile-menu">
+          <span class="bar"></span> <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+          <li class="navbar__item">
+            <a href="{%url 'home' %}" class="navbar__links" id="home-page">Home</a>
+          </li>
+          <li class="navbar__item">
+            <a href="{%url 'home'%}#about" class="navbar__links" id="about-page">About</a>
+          </li>
+          <li class="navbar__item">
+            <a href="{%url 'home'%}#services" class="navbar__links" id="services-page"
+              >Services</a
+            >
+          </li>
+          {% if user.is_authenticated %}
+          <li class="navbar__item">
+            <a href="#" class="username-button">{{ user.username }}</a>
+          </li>
+          <li class="navbar__btn">
+            <a href="{% url 'logout' %}" class="button">Logout</a>
+          </li>
+        {% else %}
+          <li class="navbar__btn">
+            <a href="{% url 'loginpage' %}" class="button" id="signup">Sign In</a>
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+    </nav>
+{% if listings %}
+  <div class="dashboard-container">
+    <h2 class="dashboard-heading">Your Loadout</h2>
+    <div class="dashboard-listings">
+      {% for listing in listings %}
+        <div class="dashboard-card">
+          <h3 class="dashboard-title">{{ listing.console_name }}</h3>
+          <p class="dashboard-description">{{ listing.description }}</p>
+          <p class="dashboard-price">₹{{ listing.price }}</p>
+          <div class="dashboard-actions">
+            <a href="{% url 'edit_listing' listing.pk %}">Edit</a>
+            <a href="{% url 'delete_listing' listing.pk %}">Delete</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% else %}
+<p style="color: white;">Total listings: {{ listings|length }}</p>
+  <p style="color: white; font-weight: bold; text-align: center; margin-top: 150px; font-size: 50px;">No listings found.</p>
+{% endif %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.getElementById("mobile-menu");
+    const menuLinks = document.querySelector(".navbar__menu");
+
+    menu.addEventListener("click", function () {
+      menu.classList.toggle("is-active");
+      menuLinks.classList.toggle("active");
+    });
+  });
+</script>
+</body>
+</html>

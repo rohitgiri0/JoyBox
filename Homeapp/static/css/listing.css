@@ -30,8 +30,8 @@ body, html {
 }
 
 .listing-container:hover {
-  border: 1px solid #8b5cf6;
-  box-shadow: 0 8px 28px rgba(139, 92, 246, 0.4);
+  border: 1px solid #de4834;
+  box-shadow: 0 8px 28px rgba(186, 5, 5, 0.953);
 }
 
 /* Header */

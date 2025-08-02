@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}JOYBOX{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+    {% block extra_head %}{% endblock %}
+    <style>
+      .navbar__item .username-button {
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 6px;
+        line-height: 1;
+        background-color: #11111c;
+        padding: 10px 18px;
+        border-radius: 25px;
+        font-weight: bold;
+        color: #00ffc3;
+        text-decoration: none;
+        box-shadow: 0 0 10px #00ffc3;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .username-button:hover {
+        transform: scale(1.05);
+        background-color: #0f0f2b;
+        border-color: #00ffc3;
+        box-shadow: 0 0 20px #00ffc3, 0 0 10px #00ffc3 inset;
+        color: #ffffff;
+      }
+        @media (max-width: 768px) {
+        .navbar__item .username-button {
+          display: block;
+          width: 100%;
+          max-width: 250px;
+          text-align: center;
+          margin: 10px auto;
+          padding: 10px;
+          font-size: 1rem;
+        }
+      }
+      
+    </style>
+  </head>
+  <body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <img src="{% static 'images/JoyBox.png' %}" alt="JoyBox">
+        <div class="navbar__toggle" id="mobile-menu">
+          <span class="bar"></span> <span class="bar"></span> <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+          <li class="navbar__item"><a href="{% url 'home' %}" class="navbar__links" id="home-page">Home</a></li>
+          <li class="navbar__item"><a href="#about" class="navbar__links" id="about-page">About</a></li>
+          <li class="navbar__item"><a href="#services" class="navbar__links" id="services-page">Services</a></li>
+          {% if user.is_authenticated %}
+          <li class="navbar__item"><a href="{% url 'dashboard' %}" class="username-button">{{ user.username }}</a></li>
+          <li class="navbar__btn"><a href="{% url 'logout' %}" class="button">Logout</a></li>
+          {% else %}
+          <li class="navbar__btn"><a href="{% url 'loginpage' %}" class="button" id="signup">Sign In</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Dynamic Content Block -->
+    {% block content %}{% endblock %}
+
+    <!-- Navbar Mobile Toggle Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const menu = document.getElementById("mobile-menu");
+        const menuLinks = document.querySelector(".navbar__menu");
+
+        menu.addEventListener("click", function () {
+          menu.classList.toggle("is-active");
+          menuLinks.classList.toggle("active");
+        });
+      });
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
+  </body>
+</html>

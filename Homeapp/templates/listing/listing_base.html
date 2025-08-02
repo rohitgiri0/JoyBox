@@ -1,0 +1,89 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-900 text-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Listing | Joybox{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/listing.css' %}">
+    <style>
+      .back-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-button:hover {
+        background-color: #0056b3;
+      }
+      @media (max-width: 600px) {
+        .back-button {
+          display: block;
+          width: 90%;
+          text-align: center;
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+              @media (max-width: 768px) {
+        .navbar__item .username-button {
+          display: block;
+          width: 100%;
+          max-width: 250px;
+          text-align: center;
+          margin: 10px auto;
+          padding: 10px;
+          font-size: 1rem;
+        }
+      }
+      .listing-container:hover {
+        border: 1px solid #de4834;
+        box-shadow: 0 8px 28px rgba(186, 5, 5, 0.953);
+}
+      .header {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #ff7b00, #ffa94d, #ff7b00);
+        background-size: 300% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 5s ease-in-out infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0% center;
+        }
+        50% {
+          background-position: 100% center;
+        }
+        100% {
+          background-position: 0% center;
+        }
+      }
+    </style>
+</head>
+<body class="page-body">
+    <div class="listing-container">
+        <h2 class="header">{% block heading %}Pitch Your Playbox{% endblock %}</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="form-space">
+            {% csrf_token %}
+            {% block form_fields %}{% endblock %}
+            <div>
+                <button type="submit" class="submit-button">{% block button_label %}Post Listing{% endblock %}</button>
+            </div>
+        </form>
+                <a href="{% url 'home' %}" class="back-button">Back</a>
+
+    </div>
+</body>
+</html>

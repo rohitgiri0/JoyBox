@@ -12,6 +12,62 @@
       integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
       crossorigin="anonymous"
     />
+    <style>
+      .navbar__item .username-button {
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 6px;
+        line-height: 1;
+        background-color: #1a1200;
+        padding: 10px 18px;
+        border-radius: 25px;
+        font-weight: bold;
+        color: #ff7b00;
+        text-decoration: none;
+        box-shadow: 0 0 10px #ff7b00;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .username-button:hover {
+        transform: scale(1.05);
+        background-color: #2a1c00;
+        border-color: #ff7b00;
+        box-shadow: 0 0 20px #ff7b00, 0 0 10px #ff7b00 inset;
+        color: #ffffff;
+      }
+
+      .navbar__btn .button {
+        background: linear-gradient(to right, #ff7b00, #ff4f00);
+        padding: 8px 18px;
+        border-radius: 25px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        border: none;
+        box-shadow: 0 0 12px #ff6a00;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .navbar__btn .button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #ff4f00, 0 0 12px #ff7b00 inset;
+        color: #ffffff;
+      }
+
+      @media (max-width: 768px) {
+        .navbar__item .username-button {
+          display: block;
+          width: 100%;
+          max-width: 250px;
+          text-align: center;
+          margin: 10px auto;
+          padding: 10px;
+          font-size: 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
 
@@ -37,7 +93,7 @@
           </li>
           {% if user.is_authenticated %}
           <li class="navbar__item">
-            <a href="#" class="navbar__links">{{ user.username }}</a>
+            <a href="{% url 'dashboard' %}" class="username-button">{{ user.username }}</a>
           </li>
           <li class="navbar__btn">
             <a href="{% url 'logout' %}" class="button">Logout</a>
@@ -55,7 +111,7 @@
     <div class="hero" id="home">
       <div class="hero__container">
         <h1 class="hero__heading">Your <span>Gaming Console</span></h1>
-        <p class="hero__description">Marketplace</p>
+        <p class="hero__description">Rental Hub</p>
         <button class="main__btn"><a href="#">Explore</a></button>
       </div>
     </div>
@@ -110,7 +166,7 @@
         <h1>Powering Up…</h1>
         <h2>You're Part of the Team</h2>
         <p>Thanks for being a part of JoyBox.</p>
-        <button class="main__btn"><a href="{% url 'home' %}">Go to Dashboard</a></button>
+        <button class="main__btn"><a href="{% url 'dashboard' %}">Go to Dashboard</a></button>
       {% else %}
         <h1>Join Our Team</h1>
         <h2>Sign Up Today</h2>

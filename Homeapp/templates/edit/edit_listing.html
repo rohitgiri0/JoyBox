@@ -1,0 +1,43 @@
+{% extends "listing/listing_base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Listing | Joybox{% endblock %}
+{% block heading %}Update Your Console{% endblock %}
+{% block button_label %}Update Listing{% endblock %}
+
+{% block form_fields %}
+<div>
+  <label for="id_title" class="label">Console Name</label>
+  {{ form.console_name|add_class:"input-field"|attr:"placeholder=PS5,Xbox" }}
+</div>
+
+<div>
+  <label for="id_description" class="label">Description</label>
+  {{ form.description|add_class:"input-field"|attr:"placeholder=Games_you_have" }}
+</div>
+
+<div>
+  <label for="id_price" class="label">Price per day(₹)</label>
+  {{ form.price|add_class:"input-field"|attr:"placeholder=250" }}
+</div>
+
+<div>
+  <label for="id_location" class="label">Location</label>
+  {{ form.location|add_class:"input-field"|attr:"placeholder=Enter_city_or_area" }}
+</div>
+
+<div class="checkbox-group">
+  {{ form.available }}
+  <label for="id_available" class="checkbox-label">Available</label>
+</div>
+
+<div>
+  <label class="label">Upload Photo 1</label>
+  {{ form.photo1|add_class:"file-input" }}
+</div>
+
+<div>
+  <label class="label">Upload Photo 2</label>
+  {{ form.photo2|add_class:"file-input" }}
+</div>
+{% endblock %}

@@ -76,3 +76,29 @@ def browse_consoles(request):
     if game:
         consoles = consoles.filter(description__icontains=game)
     return render(request, 'browse/browse_console.html', {'consoles': consoles})
+
+@login_required
+def dashboard(request):
+    # listings=ConsoleListing.objects.filter(user=request.user)
+    listings = ConsoleListing.objects.filter(user=request.user)
+    return render(request,'dashboard/dashboard.html',{'listings':listings})
+
+@login_required
+def edit_listing(request,pk):
+    listing=get_object_or_404(ConsoleListing,pk=pk,user=request.user)
+    if request.method=="POST":
+        form=ConsoleListingForm(request.POST, request.FILES, instance=listing)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form=ConsoleListingForm(instance=listing)
+    return render(request,'edit/edit_listing.html',{'form':form})
+
+@login_required
+def delete_listing(request, pk):
+    listing = get_object_or_404(ConsoleListing, pk=pk, user=request.user)
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('dashboard')
+    return render(request, 'delete/delete_confirm.html', {'listing': listing})
