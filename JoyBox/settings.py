@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from environ import Env
+import dj_database_url
+env=Env()
+Env.read_env()
+ENVIRONMENT=env('ENVIRONMENT',default='production')
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,13 +27,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%g-0$ky5aro&@r&s#)bh@ulqxbb*34n5kq8$p^e7y%mal1ufma'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if ENVIRONMENT=='development':
+    DEBUG = True 
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 SITE_ID = 1
+CSRF_TRUSTED_ORIGINS = [
+    'https://joybox.up.railway.app'
+    
+    
+]
 
 # Application definition
 
@@ -38,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Homeapp',
+    'admin_honeypot',
     'django.contrib.sites', 
     'allauth',
     'allauth.account',
@@ -92,6 +108,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+POSTGRES_LOCALLY=False
+if ENVIRONMENT=='production' or POSTGRES_LOCALLY==True:
+    DATABASES['default']=dj_database_url.parse(env('DATABASE_URL'))
+
+
+
 
 
 # Password validation
@@ -134,7 +156,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
-# STATIC_ROOT=os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 LOGIN_REDIRECT_URL='/'
 LOGOUT_REDIRECT_URL='/'
 SOCIALACCOUNT_LOGIN_ON_GET=True
@@ -152,9 +174,14 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [("127.0.0.1", 6379)],
+            'hosts': [{
+                'host': os.getenv("REDIS_HOST") or "localhost",
+                'port': int(os.getenv("REDIS_PORT") or 6379),
+                'password': os.getenv("REDIS_PASSWORD", None),
+            }],
         },
     },
 }
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+ACCOUNT_USERNAME_BLACKLIST=['admin','accounts','profile','post','theboss']
