@@ -189,3 +189,4 @@ CHANNEL_LAYERS = {
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ACCOUNT_USERNAME_BLACKLIST=['admin','accounts','profile','post','theboss']
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
