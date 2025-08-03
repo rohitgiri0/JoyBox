@@ -1,1 +1,10 @@
 .venv
+venv/
+static/
+node/
+__pycache__/
+.env
+.DS_store
+db.sqlite3
+migrations/
+media/
