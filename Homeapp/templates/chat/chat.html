@@ -157,8 +157,9 @@ html, body {
   console.log("Room ID:", roomId);
 
   if (roomId) {
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
     const chatSocket = new WebSocket(
-      'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+      `${protocol}://${window.location.host}/ws/chat/${roomId}/`
     );
 
     const chatLog = document.querySelector('#chat-log');
