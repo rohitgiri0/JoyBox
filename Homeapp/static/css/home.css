@@ -460,9 +460,12 @@
     font-size: 2rem;
   }
 
+
   .main__content p {
-    margin-top: 2rem;
-  }
+  margin-top: 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
 
   .main__btn {
     padding: 12px 36px;
@@ -508,39 +511,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #fff;
-  background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+  /* color: #fff;
+  background-image: linear-gradient(to right, #0b4647 0%, #ff0088 100%); */
 
   
   transition: 0.3s ease-in-out;
 }
 
-.services__card:nth-child(2) {
-  background: #1fa2ff; /* fallback color */
-  background: -webkit-linear-gradient(
-    to right,
-    #a6ffcb,
-    #12d8fa,
-    #1fa2ff
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #a6ffcb,
-    #12d8fa,
-    #1fa2ff
-  );
-  
-}
 
-.services__card:nth-child(3) {
-  background-image: linear-gradient(
-    -225deg,
-    #231557 0%,
-    #44107a 29%,
-    #ff1361 67%,
-    #fff800 100%
-  );
-}
+
 
 .services__card h2 {
   text-align: center;

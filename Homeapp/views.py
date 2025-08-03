@@ -9,7 +9,11 @@ from django.utils import timezone
 from django.urls import reverse
 from .models import *
 from .forms import ConsoleListingForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import ChatRoom, Message
+from django.db.models import Q, Max
 # Create your views here.
 
 def home(request):
@@ -107,3 +111,50 @@ def delete_listing(request, pk):
 def console_detail(request, pk):
     listing = get_object_or_404(ConsoleListing, pk=pk)
     return render(request, 'listing/console_detail.html', {'listing': listing})
+
+
+@login_required
+def chat_with_user(request, username):
+    other_user = get_object_or_404(User, username=username)
+
+    if other_user == request.user:
+        return redirect('home')  # Prevent chatting with yourself
+
+    # Get or create chat room between users
+    room = ChatRoom.objects.filter(user1=request.user, user2=other_user).first()
+    if not room:
+        room = ChatRoom.objects.filter(user1=other_user, user2=request.user).first()
+    if not room:
+        room = ChatRoom.objects.create(user1=request.user, user2=other_user)
+
+    messages = room.messages.all()
+
+    return render(request, 'chat/chat.html', {
+        'room': room,
+        'messages': messages,
+        'other_user': other_user
+    })
+
+@login_required
+def chat_list(request):
+    user = request.user
+
+    # Get all chat rooms involving the user
+    rooms = ChatRoom.objects.filter(Q(user1=user) | Q(user2=user))
+
+    chat_rooms = []
+
+    for room in rooms:
+        last_message = room.messages.order_by('-timestamp').first()
+        if not last_message:
+            continue  # skip rooms with no messages
+
+        other_user = room.user2 if room.user1 == user else room.user1
+
+        chat_rooms.append({
+            'id': room.id,
+            'other_user': other_user,
+            'last_message': last_message.content,
+        })
+
+    return render(request, 'chat/chat_list.html', {'chat_rooms': chat_rooms})

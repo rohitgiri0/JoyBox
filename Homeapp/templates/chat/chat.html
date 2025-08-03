@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<style>
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #1e1e2f;
+}
+
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.chat-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: #d6c2ff;
+  padding: 1rem;
+  background-color: #1e1e2f;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #121221;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  scrollbar-width: thin;
+  padding-bottom: 6rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.message.me {
+  align-items: flex-end;
+}
+
+.message.other {
+  align-items: flex-start;
+}
+
+.message .bubble {
+  padding: 0.75rem 1.25rem;
+  border-radius: 20px;
+  max-width: 75%;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease-in-out;
+  line-height: 1.4;
+}
+
+.message.me .bubble {
+  background: linear-gradient(to right, #c1aaff, #e0d1ff);
+  color: #000;
+}
+
+.message.other .bubble {
+  background-color: #2f2f47;
+  color: #fff;
+}
+
+.chat-input {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background-color: #1e1e2f;
+  border-top: 1px solid #333;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 25px;
+  background-color: #2a2a3f;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.chat-input button {
+  background: linear-gradient(to right, #ff8c00, #ffa94d);
+  border: none;
+  padding: 0.75rem 1.4rem;
+  border-radius: 25px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chat-input button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255, 140, 0, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<div class="chat-wrapper">
+  <div class="chat-header">Chat with {{ other_user.username }}</div>
+
+  <div id="chat-log" class="chat-box">
+    {% for msg in messages %}
+      <div class="message {% if msg.sender == request.user %}me{% else %}other{% endif %}">
+        <div class="bubble">{{ msg.content }}</div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form id="chat-form" class="chat-input">
+    {% csrf_token %}
+    <input type="text" id="chat-message-input" autocomplete="off" placeholder="Type your message..." />
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+  const roomId = "{{ room.id|default:'' }}";
+  console.log("Room ID:", roomId);
+
+  if (roomId) {
+    const chatSocket = new WebSocket(
+      'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+    );
+
+    const chatLog = document.querySelector('#chat-log');
+    const input = document.querySelector('#chat-message-input');
+    const form = document.querySelector('#chat-form');
+
+    let isSocketOpen = false;
+
+    chatSocket.onopen = function() {
+      console.log("WebSocket connection opened.");
+      isSocketOpen = true;
+    };
+
+    chatSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      const bubble = document.createElement('div');
+      bubble.className = data.username === "{{ request.user.username }}" ? 'message me' : 'message other';
+      bubble.innerHTML = `<div class="bubble">${data.message}</div>`;
+      chatLog.appendChild(bubble);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    chatSocket.onclose = function(e) {
+      console.error('Chat socket closed unexpectedly');
+      isSocketOpen = false;
+    };
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (message && isSocketOpen) {
+        chatSocket.send(JSON.stringify({ 'message': message }));
+        input.value = '';
+      } else if (!isSocketOpen) {
+        console.warn("WebSocket not open. Message not sent.");
+      }
+    });
+  } else {
+    console.error("No room ID provided. WebSocket connection not established.");
+  }
+</script>
+{% endblock %}

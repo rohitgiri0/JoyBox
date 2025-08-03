@@ -119,6 +119,6 @@
   <h2>Seller Info</h2>
   <p><strong>Name:</strong> {{ listing.user.username }}</p>
   {% comment %} <p><strong>Email:</strong> {{ listing.user.email }}</p> {% endcomment %}
-  <a href="#" class="chat-btn">Chat with Seller</a>
+  <a href="{% url 'chat_with_user' listing.user.username %}" class="chat-btn">Chat with Seller</a>
 </div>
 {% endblock %}

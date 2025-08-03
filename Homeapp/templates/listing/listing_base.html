@@ -5,9 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Listing | Joybox{% endblock %}</title>
+    <title>{% block title %}🎮 Create Your JoyBox Listing{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/listing.css' %}">
     <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #0f0f0f;
+      }
+
+      .page-body {
+        min-height: 100vh;
+        background-color: #0f0f0f;
+      }
       .back-button {
         display: inline-block;
         margin-top: 20px;
@@ -69,11 +80,128 @@
           background-position: 0% center;
         }
       }
+
+      .form-space {
+        background-color: #1a1a1a;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(255, 100, 0, 0.2);
+        max-width: 700px;
+        margin: 0 auto 40px;
+      }
+
+      .form-space label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #ffa94d;
+      }
+
+      .form-space input,
+      .form-space textarea,
+      .form-space select {
+        width: 100%;
+        padding: 12px;
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 1rem;
+      }
+
+      .form-space input:focus,
+      .form-space textarea:focus,
+      .form-space select:focus {
+        outline: none;
+        border-color: #ff7b00;
+        box-shadow: 0 0 10px rgba(255, 123, 0, 0.4);
+      }
+
+      .form-space .checkbox-row input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+        margin: 0;
+        accent-color: #ff7b00;
+        cursor: pointer;
+      }
+
+      .submit-button {
+        background: linear-gradient(to right, #ff7b00, #ff4f00);
+        padding: 12px 28px;
+        border-radius: 50px;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 100, 0, 0.4);
+        transition: all 0.3s ease;
+        display: inline-block;
+        font-size: 1rem;
+      }
+
+      .submit-button:hover {
+        transform: scale(1.05);
+        background: linear-gradient(to right, #ff4f00, #ff7b00);
+        box-shadow: 0 0 20px rgba(255, 100, 0, 0.6);
+      }
+      @media (max-width: 600px) {
+  .form-space {
+    padding: 20px;
+    margin: 0 16px 40px;
+    max-width: 100%;
+    box-shadow: none;
+  }
+
+  .form-space input,
+  .form-space textarea,
+  .form-space select {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .header {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    padding: 0 12px;
+  }
+
+  .back-button {
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+      .highlighted {
+        display: inline-block;
+        background: linear-gradient(90deg, #ff4f00, #ff7b00);
+        padding: 6px 18px;
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 0 12px rgba(255, 100, 0, 0.4);
+        animation: pulseGlow 2s infinite;
+      }
+
+      @keyframes pulseGlow {
+        0%, 100% {
+          box-shadow: 0 0 12px rgba(255, 100, 0, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 24px rgba(255, 100, 0, 0.6);
+        }
+      }
     </style>
 </head>
 <body class="page-body">
     <div class="listing-container">
-        <h2 class="header">{% block heading %}Pitch Your Playbox{% endblock %}</h2>
+        <h2 class="header">{% block heading %}<span class="highlighted">🎮 Pitch Your Playbox</span>{% endblock %}</h2>
 
         <form method="POST" enctype="multipart/form-data" class="form-space">
             {% csrf_token %}

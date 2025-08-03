@@ -192,7 +192,7 @@ color: rgb(129, 121, 176);
 
   .username-input,
   .password-input {
-    width: 100%;
+    width: 80%;
     font-size: 1em;
   }
 

@@ -1,0 +1,79 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="chat-list-container">
+  <h2 class="chat-list-heading">Your Conversations</h2>
+  <div class="chat-list">
+    {% for room in chat_rooms %}
+      <a href="{% url 'chat_with_user' room.other_user.username %}" class="chat-room-card">
+        <div class="chat-room-name">@{{ room.other_user.username }}</div>
+        <div class="chat-last-message">{{ room.last_message|truncatewords:10 }}</div>
+      </a>
+    {% empty %}
+      <p class="no-chat">No conversations yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.chat-list-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #1e1e2f;
+  border-radius: 12px;
+  color: white;
+}
+
+.chat-list-heading {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  color: #c1aaff;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.chat-room-card {
+  display: block;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #2c2c3f;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.chat-room-card:hover {
+  background-color: #383856;
+  transform: translateY(-2px);
+}
+
+.chat-room-name {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #ffb84d;
+}
+
+.chat-last-message {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.no-chat {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+  margin-top: 2rem;
+}
+</style>
+{% endblock %}

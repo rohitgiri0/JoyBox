@@ -124,8 +124,14 @@
 {% if listings %}
   <div class="dashboard-container">
     <h2 class="dashboard-heading">Your Loadout</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <a href="{% url 'chat_list' %}" style="display: inline-block; padding: 10px 20px; border-radius: 25px; background: linear-gradient(to right, #ff7b00, #ff4f00); color: #fff; font-weight: bold; text-decoration: none; box-shadow: 0 0 12px #ff6a00; transition: all 0.3s ease;">
+        My Chats
+      </a>
+    </div>
     <div class="dashboard-listings">
       {% for listing in listings %}
+   
         <div class="dashboard-card">
           <h3 class="dashboard-title">{{ listing.console_name }}</h3>
           <p class="dashboard-description">{{ listing.description }}</p>
@@ -135,6 +141,7 @@
             <a href="{% url 'delete_listing' listing.pk %}">Delete</a>
           </div>
         </div>
+
       {% endfor %}
     </div>
   </div>

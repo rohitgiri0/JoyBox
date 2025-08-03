@@ -17,6 +17,31 @@ class ConsoleListing(models.Model):
         return f"{self.user}-{self.console_name}"
 
 
+class ChatRoom(models.Model):
+    user1 = models.ForeignKey(User, related_name='chatrooms_as_user1', on_delete=models.CASCADE)
+    user2 = models.ForeignKey(User, related_name='chatrooms_as_user2', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user1', 'user2'], name='unique_chat_between_users')
+        ]
 
+    def __str__(self):
+        return f"Chat between {self.user1.username} & {self.user2.username}"
 
+    def get_opponent(self, user):
+        return self.user2 if self.user1 == user else self.user1
+
+class Message(models.Model):
+    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='messages')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['timestamp']
+
+    def __str__(self):
+        return f"{self.sender.username}: {self.content[:30]}"

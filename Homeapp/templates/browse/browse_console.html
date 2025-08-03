@@ -7,8 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="https://kit.fontawesome.com/a2e0e6fae4.js" crossorigin="anonymous"></script>
-
-  
   <link rel="stylesheet" href="{% static 'css/browse.css' %}">
       <style>
       .navbar__item .username-button {
@@ -125,9 +123,10 @@
       <select name="game">
         <option value="">All Games</option>
         <option value="GTA" {% if request.GET.game == "GTA" %}selected{% endif %}>GTA</option>
-        <option value="RDR" {% if request.GET.game == "RDR" %}selected{% endif %}>RDR</option>
-        <option value="Fortnite" {% if request.GET.game == "Fortnite" %}selected{% endif %}>Fortnite</option>
-        <option value="Valorant" {% if request.GET.game == "Valorant" %}selected{% endif %}>Valorant</option>
+        <option value="Minecraft" {% if request.GET.game == "Minecraft" %}selected{% endif %}>Minecraft</option>
+        <option value="Call of Duty" {% if request.GET.game == "Call of Duty" %}selected{% endif %}>Call of Duty</option>
+        <option value="God of War" {% if request.GET.game == "God of War" %}selected{% endif %}>God of War</option>
+        <option value="FIFA" {% if request.GET.game == "FIFA" %}selected{% endif %}>FIFA</option>
       </select>
       <button type="submit" class="filter-icon">search<i class="fas fa-filter"></i></button>
     </form>

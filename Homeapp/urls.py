@@ -11,4 +11,6 @@ urlpatterns = [
     path('edit/<int:pk>/', views.edit_listing, name='edit_listing'),
     path('delete/<int:pk>/', views.delete_listing, name='delete_listing'),
     path('listing/<int:pk>/', views.console_detail, name='console_detail'),
+    path('chat/<str:username>/', views.chat_with_user, name='chat_with_user'),
+    path('my-chats/', views.chat_list, name='chat_list'),
 ]

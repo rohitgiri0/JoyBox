@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}JoyBox{% endblock %}</title>
+  {% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
+  {% block extra_head %}{% endblock %}
+</head>
+<body style="margin: 0; background-color: #11111c; font-family: 'Poppins', sans-serif; color: white;">
+  
+
+  <header style="padding: 1rem; text-align: center; background: #1a1a2e;">
+    <h2>🎮 JoyBox</h2>
+  </header>
+
+  <main>
+    {% block content %}
+
+    {% endblock %}
+  </main>
+
+
+  <footer style="text-align: center; padding: 1rem; background: #1a1a2e;">
+    <p>&copy; 2025 JoyBox</p>
+  </footer>
+
+</body>
+</html>
