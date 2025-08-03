@@ -17,7 +17,9 @@ from environ import Env
 import dj_database_url
 env=Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
-Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))  # safer for local only
+env_path = os.path.join(BASE_DIR, '.env')
+if os.path.exists(env_path):
+    Env.read_env(env_file=env_path)
 ENVIRONMENT=env('ENVIRONMENT',default='production')
 
 
