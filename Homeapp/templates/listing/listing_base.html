@@ -17,7 +17,10 @@
 
       .page-body {
         min-height: 100vh;
-        background-color: #0f0f0f;
+        background-color: #000;
+      }
+      .listing-container {
+        background-color: #000;
       }
       .back-button {
         display: inline-block;
@@ -42,6 +45,11 @@
           margin-left: 0;
           margin-right: 0;
         }
+        .listing-container {
+          border: none !important;
+          box-shadow: none !important;
+          background-color: #000;
+        }
       }
               @media (max-width: 768px) {
         .navbar__item .username-button {
@@ -55,8 +63,8 @@
         }
       }
       .listing-container:hover {
-        border: 1px solid #de4834;
-        box-shadow: 0 8px 28px rgba(186, 5, 5, 0.953);
+        border: none;
+        box-shadow: none;
 }
       .header {
         font-size: 2.5rem;
