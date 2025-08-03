@@ -1,6 +1,5 @@
 .venv
 venv/
-static/
 node/
 __pycache__/
 .env

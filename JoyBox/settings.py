@@ -9,13 +9,14 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 from pathlib import Path
 import os
 from environ import Env
 import dj_database_url
 env=Env()
+BASE_DIR = Path(__file__).resolve().parent.parent
 Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))  # safer for local only
 ENVIRONMENT=env('ENVIRONMENT',default='production')
 
