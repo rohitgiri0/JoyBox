@@ -31,7 +31,6 @@ html, body {
   padding: 1rem;
   background-color: #121221;
   border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -125,9 +124,11 @@ html, body {
 
 </style>
 
+</style>
+<style>
 @media (max-width: 768px) {
   .chat-box {
-    padding-bottom: 200px;
+    padding-bottom: 300px;
   }
 }
 </style>
@@ -141,7 +142,7 @@ html, body {
         <div class="bubble">{{ msg.content }}</div>
       </div>
     {% endfor %}
-    <div style="height: 160px;"></div>
+    <div style="height: 300px;"></div>
   </div>
 
   <form id="chat-form" class="chat-input">
