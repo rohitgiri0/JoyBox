@@ -41,13 +41,13 @@ html, body {
 .chat-box {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 1rem 0.75rem 7rem;
   background-color: #121221;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  scrollbar-width: thin;
-  padding-bottom: 6rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .message {
@@ -64,12 +64,13 @@ html, body {
 }
 
 .message .bubble {
-  padding: 0.75rem 1.25rem;
+  padding: 1rem 1.25rem;
   border-radius: 20px;
-  max-width: 75%;
-  font-size: 0.95rem;
-  animation: fadeIn 0.3s ease-in-out;
-  line-height: 1.4;
+  max-width: 85%;
+  font-size: 1rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .message.me .bubble {
@@ -84,8 +85,9 @@ html, body {
 
 .chat-input {
   display: flex;
-  gap: 0.6rem;
-  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
   background-color: #1e1e2f;
   border-top: 1px solid #333;
   position: fixed;
@@ -93,28 +95,30 @@ html, body {
   left: 0;
   width: 100%;
   z-index: 10;
-  flex-shrink: 0;
   box-sizing: border-box;
+  align-items: center;
 }
 
 .chat-input input {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   border: none;
   border-radius: 25px;
   background-color: #2a2a3f;
   color: #fff;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  min-height: 48px;
 }
 
 .chat-input button {
   background: linear-gradient(to right, #ff8c00, #ffa94d);
   border: none;
-  padding: 0.75rem 1.4rem;
+  padding: 1rem 1.5rem;
   border-radius: 25px;
   color: white;
   font-weight: 600;
   cursor: pointer;
+  font-size: 1rem;
   transition: all 0.3s ease;
 }
 
@@ -172,6 +176,7 @@ html, body {
     chatSocket.onopen = function() {
       console.log("WebSocket connection opened.");
       isSocketOpen = true;
+      chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'smooth' });
     };
 
     chatSocket.onmessage = function(e) {
@@ -180,7 +185,7 @@ html, body {
       bubble.className = data.username === "{{ request.user.username }}" ? 'message me' : 'message other';
       bubble.innerHTML = `<div class="bubble">${data.message}</div>`;
       chatLog.appendChild(bubble);
-      chatLog.scrollTop = chatLog.scrollHeight;
+      chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'smooth' });
     };
 
     chatSocket.onclose = function(e) {
