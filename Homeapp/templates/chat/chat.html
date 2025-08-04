@@ -41,7 +41,8 @@ html, body {
 .chat-box {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem 0.75rem 7rem;
+  padding: 1rem 0.75rem 160px;
+  margin-bottom: 0; /* increase to ensure full scroll visibility */
   background-color: #121221;
   display: flex;
   flex-direction: column;
@@ -64,31 +65,29 @@ html, body {
 }
 
 .message .bubble {
-  padding: 1rem 1.25rem;
-  border-radius: 20px;
-  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: 18px;
+  max-width: 90%;
   font-size: 1rem;
-  line-height: 1.5;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  line-height: 1.4;
+  background-color: #2a2a3f;
 }
 
 .message.me .bubble {
-  background: linear-gradient(to right, #c1aaff, #e0d1ff);
-  color: #000;
+  background-color: #005c4b;
+  color: #fff;
+  align-self: flex-end;
 }
 
 .message.other .bubble {
-  background-color: #2f2f47;
+  background-color: #2a2a3f;
   color: #fff;
+  align-self: flex-start;
 }
 
 .chat-input {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 0.75rem);
-  background-color: #1e1e2f;
+  padding: 0.75rem 1rem;
+  background-color: #121221;
   border-top: 1px solid #333;
   position: fixed;
   bottom: 0;
@@ -96,35 +95,32 @@ html, body {
   width: 100%;
   z-index: 10;
   box-sizing: border-box;
+  display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .chat-input input {
   flex: 1;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 20px;
   border: none;
-  border-radius: 25px;
-  background-color: #2a2a3f;
-  color: #fff;
   font-size: 1rem;
-  min-height: 48px;
+  background-color: #232336;
+  color: #fff;
 }
 
 .chat-input button {
-  background: linear-gradient(to right, #ff8c00, #ffa94d);
-  border: none;
-  padding: 1rem 1.5rem;
-  border-radius: 25px;
+  padding: 0.75rem 1rem;
+  border-radius: 50%;
+  background-color: #00bfa5;
   color: white;
-  font-weight: 600;
+  font-size: 1.2rem;
+  border: none;
   cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.chat-input button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(255, 140, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes fadeIn {
@@ -148,6 +144,7 @@ html, body {
         <div class="bubble">{{ msg.content }}</div>
       </div>
     {% endfor %}
+    <div style="height: 160px;"></div>
   </div>
 
   <form id="chat-form" class="chat-input">
@@ -176,7 +173,9 @@ html, body {
     chatSocket.onopen = function() {
       console.log("WebSocket connection opened.");
       isSocketOpen = true;
-      chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'smooth' });
+      setTimeout(() => {
+        chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'auto' });
+      }, 50);
     };
 
     chatSocket.onmessage = function(e) {
@@ -185,7 +184,9 @@ html, body {
       bubble.className = data.username === "{{ request.user.username }}" ? 'message me' : 'message other';
       bubble.innerHTML = `<div class="bubble">${data.message}</div>`;
       chatLog.appendChild(bubble);
-      chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'smooth' });
+      setTimeout(() => {
+        chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'auto' });
+      }, 50);
     };
 
     chatSocket.onclose = function(e) {
