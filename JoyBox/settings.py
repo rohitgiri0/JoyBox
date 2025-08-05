@@ -34,17 +34,15 @@ ENVIRONMENT=env('ENVIRONMENT',default='production')
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENVIRONMENT=='development':
-    DEBUG = True 
-else:
-    DEBUG = True
+# if ENVIRONMENT=='development':
+DEBUG = True 
+# else:
+    # DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 SITE_ID = 1
 CSRF_TRUSTED_ORIGINS = [
     'https://joybox.up.railway.app'
-    
-    
 ]
 
 # Application definition
@@ -112,7 +110,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-POSTGRES_LOCALLY=True
+POSTGRES_LOCALLY=False
 if ENVIRONMENT=='production' or POSTGRES_LOCALLY==True:
     DATABASES['default']=dj_database_url.parse(env('DATABASE_URL'))
 
